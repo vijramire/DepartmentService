@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name:  deptservice-rs
+  labels:
+    app: deptservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: deptservice
+  template:
+    metadata:
+      name: deptservice
+      labels:
+        app: deptservice
+    spec:
+      containers:
+        - name: deptservice
+          image: vijramire/dec7eee
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: springboot-docker-k8s
+spec:
+  selector:
+    matchLabels:
+      app: springboot-docker-k8s
+  replicas: 2 
+  template:
+    metadata:
+      name: springboot-docker-k8s
+      labels:
+        app: springboot-docker-k8s
+    spec:
+      containers:
+        - name: springboot-docker-k8s
+          image: vijramire/dept_docker_service 
+# Image that will be used to containers in the cluster
+          imagePullPolicy: Always
+          resources:
+              requests:
+                cpu: "2000m"
+                memory: "2Gi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springboot-docker-k8s-svc
+spec:
+  selector:
+    app: springboot-docker-k8s
+  ports:
+    - port: 80
+      targetPort: 8600
+  type: LoadBalancer
